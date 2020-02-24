@@ -16,6 +16,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
+                        @if(session('success'))
+                        <div class="alert alert-success" role="alert">
+                            <strong>{{ session('success') }}</strong>
+                        </div>
+                        @endif
                         <form action="/contact" method="POST">
                             @csrf
                             <div class="form-group">
@@ -44,6 +49,30 @@
                             </div>
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
+                                    <th>Email</th>
+                                    <th>Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($contacts as $index => $contact)
+                                <tr>
+                                    <td scope="row">{{ $index + 1 }}</td>
+                                    <td>{{ $contact->fname }}</td>
+                                    <td>{{ $contact->lname }}</td>
+                                    <td>{{ $contact->email }}</td>
+                                    <td>{{ $contact->number }}</td>
+                                </tr>
+                                @endforeach
+                                {!! $contacts->render() !!}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
