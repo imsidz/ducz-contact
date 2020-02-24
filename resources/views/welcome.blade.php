@@ -58,6 +58,8 @@
                                     <th>Lastname</th>
                                     <th>Email</th>
                                     <th>Number</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,6 +70,75 @@
                                     <td>{{ $contact->lname }}</td>
                                     <td>{{ $contact->email }}</td>
                                     <td>{{ $contact->number }}</td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-warning" data-toggle="modal"
+                                            data-target="#edit-{{ $contact->id }}">
+                                            Edit
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="edit-{{ $contact->id }}" tabindex="-1" role="dialog"
+                                            aria-labelledby="modelTitleId" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Modal title</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="/contact/{{ $contact->id }}" method="POST">
+                                                            @method('PUT')
+                                                            @csrf
+                                                            <div class="form-group">
+                                                                <label for="fname">Firstname</label>
+                                                                <input type="text" name="fname" id="fname"
+                                                                    value="{{ $contact->fname }}" class="form-control"
+                                                                    placeholder="First name" aria-describedby="helpId">
+                                                                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="lname">Lastname</label>
+                                                                <input type="text" name="lname" id="lname"
+                                                                    class="form-control" placeholder="Lastname"
+                                                                    value="{{ $contact->lname }}"
+                                                                    aria-describedby="helpId">
+                                                                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="email">Email</label>
+                                                                <input type="email" name="email" id="email"
+                                                                    class="form-control" placeholder="email"
+                                                                    value="{{ $contact->email }}"
+                                                                    aria-describedby="helpId">
+                                                                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="number">Contact Number</label>
+                                                                <input type="number" name="number" id="number"
+                                                                    class="form-control" placeholder="9123456789"
+                                                                    value="{{ $contact->number }}"
+                                                                    aria-describedby="helpId">
+                                                                {{-- <small id="helpId" class="text-muted">Help text</small> --}}
+                                                            </div>
+                                                            <button type="submit"
+                                                                class="btn btn-success">Submit</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form action="/contact/{{ $contact->id }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 {!! $contacts->render() !!}

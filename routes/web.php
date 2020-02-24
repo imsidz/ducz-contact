@@ -14,3 +14,7 @@
 Route::get('/', 'ContactController@index');
 
 Route::post('/contact', 'ContactController@store');
+
+Route::put('/contact/{id}', 'ContactController@Update');
+
+Route::delete('/contact/{id}', 'ContactController@delete');

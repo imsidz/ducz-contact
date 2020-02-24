@@ -26,4 +26,25 @@ class ContactController extends Controller
 
         return back()->with('success', 'Contact Added Success');
     }
+
+    public function Update($id, Request $request)
+    {
+        $contact = Contact::find($id);
+        $contact->fname = $request->fname;
+        $contact->lname = $request->lname;
+        $contact->email = $request->email;
+        $contact->number = $request->number;
+        $contact->save();
+        Mail::to($contact->email)->send(new ContactSaved($contact));
+
+        return back()->with('success', 'Contact Updated Success');
+    }
+
+    public function delete($id)
+    {
+        $contact = Contact::find($id);
+        $contact->delete();
+
+        return back()->with('success', 'Contact Deleted Success');
+    }
 }
